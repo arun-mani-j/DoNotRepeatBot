@@ -34,7 +34,9 @@ def get_results(database, user_id, keyword):
 
     results = []
 
-    for title, snippet in database.find_snippets(user_id, keyword):
+    for title, snippet in database.find_snippets(user_id):
+        if keyword not in title:
+            continue
         content = InputTextMessageContent(message_text=snippet, parse_mode="HTML")
         article = InlineQueryResultArticle(
             id=title[:64],

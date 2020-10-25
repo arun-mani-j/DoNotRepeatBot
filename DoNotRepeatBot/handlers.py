@@ -103,7 +103,7 @@ def find(update: Update, context: CallbackContext):
         results = get_common_results(database)
         kwargs = {}
 
-    query.answer(results=results, is_personal=True, **kwargs)
+    query.answer(results=results, cache_time=5, is_personal=True, **kwargs)
 
 
 def help_info(update: Update, _: CallbackContext):

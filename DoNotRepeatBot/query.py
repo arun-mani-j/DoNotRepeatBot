@@ -17,7 +17,7 @@ class Query:
 
     FIND_SNIPPETS = (
         "SELECT title, snippet FROM snippets "
-        "WHERE user_id = %s AND title @@ %s LIMIT %s;"
+        "WHERE user_id = %s LIMIT %s;"
     )
 
     LIST_SNIPPETS = "SELECT title FROM snippets WHERE user_id = %s;"

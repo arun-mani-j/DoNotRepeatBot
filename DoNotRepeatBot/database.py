@@ -44,14 +44,14 @@ class Database:
         self.connection.commit()
         return ret
 
-    def find_snippets(self, user_id: int, phrase: str, limit: int = 10):
+    def find_snippets(self, user_id: int, limit: int = 10):
 
         """
         Yields all snippets by user matching the given phrase.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.FIND_SNIPPETS, (user_id, phrase, limit))
+        cursor.execute(Query.FIND_SNIPPETS, (user_id, limit))
         for (title, snippet) in cursor:
             yield (title, snippet)
         cursor.close()
