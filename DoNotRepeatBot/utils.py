@@ -26,17 +26,15 @@ def get_common_results(database):
     return results
 
 
-def get_results(database, user_id, keyword):
+def get_results(database, user_id, phrase):
 
     """
-    Gets results specific to user and matching given keyword.
+    Gets results specific to user and matching given phrase.
     """
 
     results = []
 
-    for title, snippet in database.find_snippets(user_id):
-        if keyword not in title:
-            continue
+    for title, snippet in database.find_snippets(user_id, phrase):
         content = InputTextMessageContent(message_text=snippet, parse_mode="HTML")
         article = InlineQueryResultArticle(
             id=title[:64],
