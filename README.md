@@ -18,4 +18,6 @@
  
 # Contributing, Forking
  The bot's source code is under GPL v3 license. Feel free to fork the repository and make changes as you wish.
- If you have any improvements, bug reports, feature requests, please open a new issue.
+ If you have any improvements, bug reports, feature requests, please open a new issue or ask in [Do Not Repeat Bot Group](https://t.me/donotrepeat).
+
+ To host the bot yourself, please refer [SelfHosting.md](wiki/SelfHosting.md).

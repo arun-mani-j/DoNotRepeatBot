@@ -15,6 +15,7 @@ from .database import Database
 from .handlers import add, delete, find, handle_text, help_info, snippets, start
 
 DATABASE_URL = getenv("DATABASE_URL")
+LISTEN = getenv("LISTEN")
 PORT = int(getenv("PORT", "0"))
 TOKEN = getenv("TOKEN")
 URL = getenv("URL")
@@ -54,7 +55,7 @@ class Server:
         """
 
         self.updater.start_webhook(
-            listen="0.0.0.0",
+            listen=LISTEN,
             port=PORT,
             url_path=TOKEN,
             allowed_updates=["message", "inline_query"],
