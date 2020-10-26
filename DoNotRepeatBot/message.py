@@ -48,9 +48,9 @@ class Message:
         "where <code>{TITLE}</code> is the name of the snippet."
         " 2. Select the snippet from the list of available options.\n"
         " 3. That's it !\n\n"
-        "<b>Contact Developer</b>\n"
-        " My developer is @j_arun_mani. "
-        "Please contact him for bug reports, questions and feature requests.\n\n"
+        "<b>Contact The Developers</b>\n"
+        " We have a support group : @donotrepeat. "
+        "Please ask there for bug reports, questions and feature requests.\n\n"
         "Enjoy !"
     )
 
