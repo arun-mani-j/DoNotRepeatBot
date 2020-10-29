@@ -16,7 +16,7 @@ class Message:
         "<b>markups</b> <a href='www.example.com'>too</a> !"
     )
 
-    ADDED_SNIPPET = "There you go with your new <code>{TITLE}</code> snippet !"
+    ADDED_SNIPPET = "There you go with your <code>{TITLE}</code> snippet !"
 
     DELETE = "Send me the title of snippet to delete."
 

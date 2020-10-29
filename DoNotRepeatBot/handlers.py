@@ -24,6 +24,9 @@ def _add(update: Update, context: CallbackContext):
     else:
         text = Message.UPDATED_SNIPPET.format(TITLE=title)
 
+    # TODO With the current table structure, there is no way to know if it was addition or updation.
+    # So everytime, it is always an addition.
+
     update.message.reply_text(text=text, parse_mode="HTML")
 
 
