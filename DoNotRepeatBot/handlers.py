@@ -94,7 +94,7 @@ def find(update: Update, context: CallbackContext):
 
     if keyword:
         results = get_results(database, user_id, keyword)
-        context.user_data["snippetTitle"] = keyword
+        context.user_data["toAddTitle"] = keyword
         kwargs = {
             "switch_pm_text": Message.SWITCH_PM,
             "switch_pm_parameter": "addSnippet",
@@ -144,7 +144,7 @@ def start(update: Update, context: CallbackContext):
     """
 
     if context.args and context.args[0] == "addSnippet":
-        context.args = context.user_data.pop("snippetTitle").split()
+        context.args = context.user_data.pop("toAddTitle").split()
         add(update, context)
     else:
         update.message.reply_text(text=Message.START, parse_mode="HTML", quote=False)
