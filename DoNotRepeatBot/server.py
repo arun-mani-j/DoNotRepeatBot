@@ -70,7 +70,7 @@ class Server:
         Starts polling for updates.
         """
 
-        self.updater.start_polling(allowed_updates=["message", "inline_query"])
+        self.updater.start_polling(allowed_updates=["channel_post", "inline_query", "message"])
         logging.info("Started polling")
         self.updater.idle()
 
