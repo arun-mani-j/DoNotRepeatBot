@@ -1,8 +1,8 @@
 """
 Handlers for incoming updates from Telegram
 """
-import loggging
-from telegram import Update
+import logging
+from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 from .message import Message
 from .utils import get_common_results, get_results
@@ -28,7 +28,7 @@ def _add(update: Update, context: CallbackContext):
     # TODO With the current table structure, there is no way to know if it was addition or updation.
     # So everytime, it is always an addition.
 
-    update.message.reply_text(text=text, parse_mode="HTML")
+    update.message.reply_text(text=text, parse_mode=ParseMode.HTML)
 
 
 def handle_text(update: Update, context: CallbackContext):
@@ -44,7 +44,7 @@ def handle_text(update: Update, context: CallbackContext):
     if context.user_data.pop("addSnippet", False):
         _add(update, context)
     else:
-        update.message.reply_text(text=Message.UNEXPECTED_MESSAGE, parse_mode="HTML")
+        update.message.reply_text(text=Message.UNEXPECTED_MESSAGE, parse_mode=ParseMode.HTML)
 
 
 def add(update: Update, context: CallbackContext):
@@ -62,7 +62,7 @@ def add(update: Update, context: CallbackContext):
     else:
         text = Message.EMPTY_TITLE
 
-    update.message.reply_text(text=text, parse_mode="HTML")
+    update.message.reply_text(text=text, parse_mode=ParseMode.HTML)
 
 
 def delete(update: Update, context: CallbackContext):
@@ -76,7 +76,7 @@ def delete(update: Update, context: CallbackContext):
     title = " ".join(context.args)
 
     if not title:
-        update.message.reply_text(text=Message.NO_TITLE, parse_mode="HTML")
+        update.message.reply_text(text=Message.NO_TITLE, parse_mode=ParseMode.HTML)
         return
 
     ret = database.remove_snippet(user_id, title)
@@ -86,7 +86,7 @@ def delete(update: Update, context: CallbackContext):
     else:
         text = Message.DELETED_NONE.format(TITLE=title)
 
-    update.message.reply_text(text=text, parse_mode="HTML")
+    update.message.reply_text(text=text, parse_mode=ParseMode.HTML)
 
 
 def find(update: Update, context: CallbackContext):
@@ -120,7 +120,7 @@ def help_info(update: Update, _: CallbackContext):
     Sends the help message.
     """
 
-    update.message.reply_text(text=Message.HELP, parse_mode="HTML")
+    update.message.reply_text(text=Message.HELP, parse_mode=ParseMode.HTML)
 
 
 def snippets(update: Update, context: CallbackContext):
@@ -142,7 +142,7 @@ def snippets(update: Update, context: CallbackContext):
     else:
         text = Message.NO_SNIPPETS
 
-    update.message.reply_text(text=text, parse_mode="HTML")
+    update.message.reply_text(text=text, parse_mode=ParseMode.HTML)
 
 
 def start(update: Update, context: CallbackContext):
@@ -155,4 +155,4 @@ def start(update: Update, context: CallbackContext):
         context.args = context.user_data.pop("toAddTitle").split()
         add(update, context)
     else:
-        update.message.reply_text(text=Message.START, parse_mode="HTML", quote=False)
+        update.message.reply_text(text=Message.START, parse_mode=ParseMode.HTML, quote=False)
