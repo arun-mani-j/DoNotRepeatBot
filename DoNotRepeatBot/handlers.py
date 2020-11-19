@@ -1,6 +1,7 @@
 """
 Handlers for incoming updates from Telegram
 """
+import loggging
 from telegram import Update
 from telegram.ext import CallbackContext
 from .message import Message
@@ -35,6 +36,10 @@ def handle_text(update: Update, context: CallbackContext):
     """
     Adds the snippet if it was meant to be.
     """
+
+    if update.message.chat.type == update.message.chat.CHANNEL:
+        logging.info("Got ping to stay awake")
+        return
 
     if context.user_data.pop("addSnippet", False):
         _add(update, context)
