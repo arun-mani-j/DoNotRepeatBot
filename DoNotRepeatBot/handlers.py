@@ -37,7 +37,7 @@ def handle_text(update: Update, context: CallbackContext):
     Adds the snippet if it was meant to be.
     """
 
-    if update.message.chat.type == update.message.chat.CHANNEL:
+    if not update.message:
         logging.info("Got ping to stay awake")
         return
 
