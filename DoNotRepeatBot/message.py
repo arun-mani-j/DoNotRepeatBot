@@ -54,7 +54,7 @@ class Message:
         " 3. Use hashtag notation to access snippets, like <code>#hello</code>, "
         "to access snippet of title <code>hello</code>.\n"
         " 4. Only admins can add and delete snippets, but everyone can access the snippets.\n"
-        " 5. If the bot has enough permissions, it will delete the hashtag text too."
+        " 5. If the bot has enough permissions, it will delete the hashtag text too.\n"
         " 6. For hashtags that are reply to another message, the snippet will be shared as its reply.\n\n"
         "<b>Contact The Developers</b>\n"
         " We have a support group : @donotrepeat. "
