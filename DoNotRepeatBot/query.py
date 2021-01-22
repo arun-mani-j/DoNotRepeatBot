@@ -10,18 +10,19 @@ class Query:
 
     ADD_SNIPPET = (
         "INSERT INTO snippets(user_id, title, snippet) VALUES (%s, %s, %s) "
-        "ON CONFLICT (user_id, title) DO UPDATE SET snippet = %s RETURNING TRUE;"
+        "ON CONFLICT (user_id, title) "
+        "DO UPDATE SET snippet = %s RETURNING TRUE;"
     )
 
     COMMON_SNIPPETS = "SELECT title, snippet FROM common_snippets LIMIT %s;"
 
     FIND_SNIPPETS = (
         "SELECT title, snippet FROM snippets "
-        "WHERE user_id = %s LIMIT %s;"
+        "WHERE user_id = %s AND title ILIKE '%%' || %s || '%%' LIMIT %s;"
     )
 
     LIST_SNIPPETS = "SELECT title FROM snippets WHERE user_id = %s;"
 
     REMOVE_SNIPPET = (
-        "DELETE FROM snippets WHERE user_id = %s AND title = %s RETURNING TRUE;"
+        "DELETE FROM snippets " "WHERE user_id = %s AND title = %s RETURNING TRUE;"
     )

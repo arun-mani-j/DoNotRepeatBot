@@ -44,20 +44,18 @@ class Database:
         self.connection.commit()
         return ret
 
-    def find_snippets(self, user_id: int, phrase: str, limit: int = 10):
+    def find_snippets(self, user_id: int, phrase: str, limit: int = 50):
 
         """
         Yields all snippets by user matching the given phrase.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.FIND_SNIPPETS, (user_id, limit))
-        for (title, snippet) in cursor:
-            if phrase.lower() in title.lower():
-                yield (title, snippet)
+        cursor.execute(Query.FIND_SNIPPETS, (user_id, phrase, limit))
+        yield from cursor
         cursor.close()
 
-    def get_common_snippets(self, limit: int = 10):
+    def get_common_snippets(self, limit: int = 50):
 
         """
         Yields common snippets not specific to any user.
@@ -65,8 +63,7 @@ class Database:
 
         cursor = self.connection.cursor()
         cursor.execute(Query.COMMON_SNIPPETS, (limit,))
-        for (title, snippet) in cursor:
-            yield (title, snippet)
+        yield from cursor
         cursor.close()
 
     def list_snippets(self, user_id: int):
@@ -77,8 +74,7 @@ class Database:
 
         cursor = self.connection.cursor()
         cursor.execute(Query.LIST_SNIPPETS, (user_id,))
-        for (title,) in cursor:
-            yield title
+        yield from cursor
         cursor.close()
 
     def remove_snippet(self, user_id: int, title: str):

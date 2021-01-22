@@ -44,7 +44,9 @@ def handle_text(update: Update, context: CallbackContext):
     if context.user_data.pop("addSnippet", False):
         _add(update, context)
     else:
-        update.message.reply_text(text=Message.UNEXPECTED_MESSAGE, parse_mode=ParseMode.HTML)
+        update.message.reply_text(
+            text=Message.UNEXPECTED_MESSAGE, parse_mode=ParseMode.HTML
+        )
 
 
 def add(update: Update, context: CallbackContext):
@@ -155,4 +157,6 @@ def start(update: Update, context: CallbackContext):
         context.args = context.user_data.pop("toAddTitle").split()
         add(update, context)
     else:
-        update.message.reply_text(text=Message.START, parse_mode=ParseMode.HTML, quote=False)
+        update.message.reply_text(
+            text=Message.START, parse_mode=ParseMode.HTML, quote=False
+        )
