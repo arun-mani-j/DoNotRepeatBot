@@ -14,7 +14,8 @@
  2. Use `/add {TITLE}` where `{TITLE}` is the name of snippet.
  3. Open any chat and use inline mode to access the snippet.
    That is, type `@DoNotRepeatBot` and enter the name of your snippet, the bot will show matching snippets.
- 4. All done !
+ 4. You can also add the bot to a group and use #hashtag notation to access the group's snippets.
+ 5. All done !
  
 # Contributing, Forking
  The bot's source code is under GPL v3 license. Feel free to fork the repository and make changes as you wish.

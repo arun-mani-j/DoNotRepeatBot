@@ -4,15 +4,28 @@ Contains Server object which obtains the updates and distributes them to handler
 
 import logging
 from os import getenv
+import re
 from telegram.ext import (
     Filters,
+    ChosenInlineResultHandler,
     CommandHandler,
     InlineQueryHandler,
     MessageHandler,
     Updater,
 )
 from .database import Database
-from .handlers import add, delete, find, handle_text, help_info, snippets, start
+from .handlers import (
+    add,
+    delete,
+    find_inline,
+    find_text,
+    handle_text,
+    help_info,
+    snippets,
+    start,
+    stay_awake_ping,
+    update_usage,
+)
 
 DATABASE_URL = getenv("DATABASE_URL")
 LISTEN = getenv("LISTEN")
@@ -43,10 +56,24 @@ class Server:
             ("start", start),
         ):
             dispatcher.add_handler(CommandHandler(cmd, hdr))
-        dispatcher.add_handler(InlineQueryHandler(find))
+
+        dispatcher.add_handler(InlineQueryHandler(find_inline))
         dispatcher.add_handler(
-            MessageHandler(filters=Filters.text, callback=handle_text)
+            ChosenInlineResultHandler(callback=update_usage, run_async=True)
         )
+        ping_handler = MessageHandler(
+            filters=Filters.chat_type.channel, callback=stay_awake_ping
+        )
+        dispatcher.add_handler(ping_handler)
+        hashtag_handler = MessageHandler(
+            filters=Filters.regex(re.compile(r"^#\w+$", re.IGNORECASE)),
+            callback=find_text,
+        )
+        dispatcher.add_handler(hashtag_handler)
+        message_handler = MessageHandler(
+            filters=Filters.text & Filters.reply, callback=handle_text
+        )
+        dispatcher.add_handler(message_handler)
 
     def listen(self):
 
@@ -58,7 +85,7 @@ class Server:
             listen=LISTEN,
             port=PORT,
             url_path=TOKEN,
-            allowed_updates=["channel_post","inline_query", "message"],
+            allowed_updates=["channel_post", "inline_query", "message"],
         )
         self.updater.bot.set_webhook(f"{URL}/{TOKEN}")
         logging.info("Started listening")
@@ -70,7 +97,14 @@ class Server:
         Starts polling for updates.
         """
 
-        self.updater.start_polling(allowed_updates=["channel_post", "inline_query", "message"])
+        self.updater.start_polling(
+            allowed_updates=[
+                "channel_post",
+                "chosen_inline_result",
+                "inline_query",
+                "message",
+            ]
+        )
         logging.info("Started polling")
         self.updater.idle()
 

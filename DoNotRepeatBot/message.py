@@ -48,17 +48,27 @@ class Message:
         "where <code>{TITLE}</code> is the name of the snippet."
         " 2. Select the snippet from the list of available options.\n"
         " 3. That's it !\n\n"
+        "<b>Usage In Groups</b>\n"
+        " 1. Sharing snippets in group is more or less done in the same way.\n"
+        " 2. Add the bot to group, and make and remove snippets using commands specified above.\n"
+        " 3. Use hashtag notation to access snippets, like <code>#hello</code>, "
+        "to access snippet of title <code>hello</code>.\n"
+        " 4. Only admins can add and delete snippets, but everyone can access the snippets.\n"
+        " 5. If the bot has enough permissions, it will delete the hashtag text too."
+        " 6. For hashtags that are reply to another message, the snippet will be shared as its reply.\n\n"
         "<b>Contact The Developers</b>\n"
         " We have a support group : @donotrepeat. "
         "Please ask there for bug reports, questions and feature requests.\n\n"
         "Enjoy !"
     )
 
+    INVALID_PERMISSIONS = "Oops, sorry ! Only admins can add or delete snippets ..."
+
     NO_RESULTS = "Could not find any snippet matching the title."
 
     SNIPPET_ITEM = " ∙ <code>{TITLE}</code>"
 
-    SNIPPETS = "These are your snippets."
+    SNIPPETS = "These are your snippets.\n{TITLES}"
 
     START = (
         "Hey there !\n"

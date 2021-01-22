@@ -30,62 +30,62 @@ class Database:
 
         self.connection.close()
 
-    def add_snippet(self, user_id: int, title: str, snippet: str):
+    def add_snippet(self, chat_id: int, title: str, snippet: str):
 
         """
-        Adds the given snippet to the database for user under title.
+        Adds the given snippet to the database for chat under title.
         Returns True if snippet was added, False if it was updated.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.ADD_SNIPPET, (user_id, title, snippet, snippet))
+        cursor.execute(Query.ADD_SNIPPET, (chat_id, title, snippet, snippet))
         ret = next(cursor, (False,))[0]
         cursor.close()
         self.connection.commit()
         return ret
 
-    def find_snippets(self, user_id: int, phrase: str, limit: int = 50):
+    def find_snippets(self, chat_id: int, phrase: str, limit: int = 50):
 
         """
-        Yields all snippets by user matching the given phrase.
+        Yields all snippets by chat matching the given phrase.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.FIND_SNIPPETS, (user_id, phrase, limit))
+        cursor.execute(Query.FIND_SNIPPETS, (chat_id, phrase, limit))
         yield from cursor
         cursor.close()
 
-    def get_common_snippets(self, limit: int = 50):
+    def list_snippets(self, chat_id: int):
 
         """
-        Yields common snippets not specific to any user.
+        Yields all the titles of snippets by chat.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.COMMON_SNIPPETS, (limit,))
+        cursor.execute(Query.LIST_SNIPPETS, (chat_id,))
         yield from cursor
         cursor.close()
 
-    def list_snippets(self, user_id: int):
+    def remove_snippet(self, chat_id: int, title: str):
 
         """
-        Yields all the titles of snippets by user.
-        """
-
-        cursor = self.connection.cursor()
-        cursor.execute(Query.LIST_SNIPPETS, (user_id,))
-        yield from cursor
-        cursor.close()
-
-    def remove_snippet(self, user_id: int, title: str):
-
-        """
-        Removes the snippet of given title for user. Returns True if any snippet was removed.
+        Removes the snippet of given title for chat. Returns True if any snippet was removed.
         """
 
         cursor = self.connection.cursor()
-        cursor.execute(Query.REMOVE_SNIPPET, (user_id, title))
+        cursor.execute(Query.REMOVE_SNIPPET, (chat_id, title))
         ret = next(cursor, (False,))[0]
         cursor.close()
         self.connection.commit()
         return ret
+
+    def update_snippet_usage(self, chat_id: int, title: str):
+
+        """
+        Increments the snippet usage by one.
+        """
+
+        cursor = self.connection.cursor()
+        cursor.execute(Query.UPDATE_USAGE, (chat_id, title))
+        cursor.close()
+        self.connection.commit()
