@@ -85,7 +85,12 @@ class Server:
             listen=LISTEN,
             port=PORT,
             url_path=TOKEN,
-            allowed_updates=["channel_post", "inline_query", "message"],
+            allowed_updates=[
+                "channel_post",
+                "choosen_inline_result",
+                "inline_query",
+                "message",
+            ],
         )
         self.updater.bot.set_webhook(f"{URL}/{TOKEN}")
         logging.info("Started listening")
