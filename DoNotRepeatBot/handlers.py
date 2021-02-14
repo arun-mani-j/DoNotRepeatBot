@@ -12,7 +12,7 @@ from telegram.constants import PARSEMODE_HTML
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from .message import Message
-from .utils import get_common_results, is_admin
+from .utils import is_admin
 
 
 def _add(update: Update, context: CallbackContext):
