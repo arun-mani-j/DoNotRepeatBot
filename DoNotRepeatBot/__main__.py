@@ -1,13 +1,19 @@
-"""
-Starts the bot.
-"""
+"""Starts the bot."""
 
-import sys
-from .server import Server
+from os import getenv
 
-server = Server()
+from DoNotRepeatBot import Server
 
-if "-p" in sys.argv:
-    server.poll()
+DATABASE_URL = getenv("DATABASE_URL")
+INTERVAL = int(getenv("INTERVAL", 2))
+LISTEN = getenv("LISTEN")
+PORT = int(getenv("PORT", 80))
+TOKEN = getenv("TOKEN")
+URL = getenv("URL")
+
+server = Server(TOKEN, DATABASE_URL)
+
+if URL:
+    server.listen(LISTEN, PORT, URL, TOKEN)
 else:
-    server.listen()
+    server.poll(INTERVAL)
