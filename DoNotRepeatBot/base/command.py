@@ -143,7 +143,10 @@ def start(update: Update, context: CallbackContext):
     """Send start message normally, else respond to payload."""
     database = context.bot_data["database"]
     gettext = context.bot_data["gettext"]
-    database.add_chat(update.message.chat.id, Literal.DEFAULT_LANG)
+    user = update.message.from_user
+    chat = update.message.chat
+    lang = user.language_code if chat.type == chat.PRIVATE else Literal.DEFAULT_LANG
+    database.add_chat(chat.id, lang)
 
     if not context.args:
         update.message.reply_text(gettext.START)

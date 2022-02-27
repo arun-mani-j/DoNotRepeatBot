@@ -31,5 +31,7 @@ def fallback(update: Update, context: CallbackContext):
 def hashtag(update: Update, context: CallbackContext):
     """Get a snippet based on hashtag title."""
     title = update.message.text[1:]
+    if update.message.reply_to_message:
+        update.message = update.message.reply_to_message
     context.args = (title,)
     get(update, context)

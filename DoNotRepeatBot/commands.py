@@ -6,7 +6,7 @@ from telegram import (BotCommandScopeAllChatAdministrators,
 
 admin = [
     ("add", "Add a snippet"),
-    ("clear", "Clear all snippets"),
+    ("clear", "Clear ALL snippets"),
     ("del", "Delete a snippet"),
     ("done", "Marks import as done"),
     ("import", "Import snippets"),
