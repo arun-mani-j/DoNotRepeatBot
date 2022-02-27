@@ -36,7 +36,7 @@ class Message:
         "If you don't get the snippet, make sure you are typing the title correctly. "
         "Else, try after a few seconds, as Telegram might <i>cache</i> the results.\n"
         "What we saw now is just a tip of the features, the bot can do!\n\n"
-        "You can learn more about the bot from the"
+        "You can learn more about the bot from the "
         "<a href='https://github.com/j-arun-mani/DoNotRepeatBot'>repository</a>.\n"
         "There is also /help to give you overview of available commands and methods.\n"
         "Finally, feel free to tell your thoughts and feedback in @DoNotRepeat 😉!"
