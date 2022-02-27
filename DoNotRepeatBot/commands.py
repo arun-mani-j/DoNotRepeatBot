@@ -23,7 +23,7 @@ member = [
 ]
 
 commands = {
-    BotCommandScopeAllChatAdministrators(): admin,
+    BotCommandScopeAllChatAdministrators(): admin + member,
     BotCommandScopeAllGroupChats(): member,
     BotCommandScopeAllPrivateChats(): admin + member,
 }
