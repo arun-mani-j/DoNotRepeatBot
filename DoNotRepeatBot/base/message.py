@@ -5,10 +5,10 @@ from telegram.ext import CallbackContext
 
 from DoNotRepeatBot.base.command import get
 from DoNotRepeatBot.utils.misc import add_snippet
-from DoNotRepeatBot.utils.wrappers import is_admin
+from DoNotRepeatBot.utils.wrappers import is_admin_silent
 
 
-@is_admin
+@is_admin_silent
 def fallback(update: Update, context: CallbackContext):
     """Fallback handler for non-command messages."""
     database = context.bot_data["database"]
