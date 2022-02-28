@@ -26,8 +26,8 @@ If you have any improvements, bug reports, feature requests, please open a new i
 
 # Translation
 
-The translation related files are located under [/locales](/locales). Familiarity with (GNU gettext)[https://www.gnu.org/software/gettext] will help you a lot.
-Please add or improve existing translation and create a [pull request](/pulls).
+The translation related files are located under [/locales](/locales). Familiarity with [GNU gettext](https://www.gnu.org/software/gettext) will help you a lot.
+Please add or improve existing translation and create a [pull request](https://github.com/J-Arun-Mani/DoNotRepeatBot/pulls).
 
 # Self Hosting
 
