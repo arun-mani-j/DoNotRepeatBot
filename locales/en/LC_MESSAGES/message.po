@@ -32,7 +32,6 @@ msgid "<code>{TITLE}</code> has been deleted."
 msgstr "<code>{TITLE}</code> has been deleted."
 
 #: DoNotRepeatBot/constants/message.py:21
-#, fuzzy
 msgid ""
 "@DoNotRepeatBot is a bot to share messages at multiple places when needed "
 "without the need to create the message again.\n"
@@ -90,7 +89,6 @@ msgstr ""
 "Finally, feel free to tell your thoughts and feedback in @DoNotRepeat 😉!"
 
 #: DoNotRepeatBot/constants/message.py:46
-#, fuzzy
 msgid ""
 "If you are very new to me, you might wanna check /guide first 😁\n"
 "\n"
@@ -323,7 +321,6 @@ msgid "<code>{TITLE}</code> not found. Use /list to view all your snippets."
 msgstr "<code>{TITLE}</code> not found. Use /list to view all your snippets."
 
 #: DoNotRepeatBot/constants/message.py:151
-#, fuzzy
 msgid ""
 "Hey there!\n"
 "I'm @DoNotRepeatBot. Never ever repeat the hassle of sending same message "
@@ -331,7 +328,7 @@ msgid ""
 msgstr ""
 "Hey there!\n"
 "I'm @DoNotRepeatBot. Never ever repeat the hassle of sending same message "
-"again!Please check /help for more information."
+"again! Please check /help for more information."
 
 #: DoNotRepeatBot/constants/message.py:158
 #, python-brace-format
