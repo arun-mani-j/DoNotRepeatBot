@@ -5,22 +5,21 @@
 #
 # Translator: student_2333 <lgc2333@126.com>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-28 01:05+0530\n"
-"PO-Revision-Date: 2022-06-07 02:13+0800\n"
+"PO-Revision-Date: 2022-06-10 02:35+0800\n"
 "Last-Translator: student_2333 <lgc2333@126.com>\n"
 "Language-Team: Simplified Chinese\n"
 "Language: Simplified Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: DoNotRepeatBot/constants/message.py:14
-#, python-brace-format
 msgid "<code>{TITLE}</code> has been added successfully."
 msgstr "成功添加便签 <code>{TITLE}</code>"
 
@@ -29,12 +28,10 @@ msgid "All the snippets have been cleared!"
 msgstr "成功清空所有已储存便签"
 
 #: DoNotRepeatBot/constants/message.py:18
-#, python-brace-format
 msgid "<code>{TITLE}</code> has been deleted."
 msgstr "已删除便签 <code>{TITLE}</code>"
 
 #: DoNotRepeatBot/constants/message.py:21
-#, fuzzy
 msgid ""
 "@DoNotRepeatBot is a bot to share messages at multiple places when needed "
 "without the need to create the message again.\n"
@@ -87,7 +84,6 @@ msgstr ""
 "最后，随时可以在 @DoNotRepeat 向我反馈Bug或者提出建议😉！"
 
 #: DoNotRepeatBot/constants/message.py:46
-#, fuzzy
 msgid ""
 "If you are very new to me, you might wanna check /guide first 😁\n"
 "\n"
@@ -230,7 +226,6 @@ msgstr ""
 "最后，随时可以在 @DoNotRepeat 向我反馈Bug或者提出建议😉！"
 
 #: DoNotRepeatBot/constants/message.py:108
-#, python-brace-format
 msgid ""
 "<b>Import Completed</b>\n"
 "• Total messages : <code>{TOTAL}</code>\n"
@@ -262,7 +257,6 @@ msgid "That's not how you start me … Need some /help?"
 msgstr "并不是这样操作的……需要帮助吗？试试 /help 。"
 
 #: DoNotRepeatBot/constants/message.py:126
-#, python-brace-format
 msgid ""
 "Available languages are {LANGS}.\n"
 "Can't find your language? Please help us at @DoNotRepeat to translate the "
@@ -272,7 +266,6 @@ msgstr ""
 "找不到你的语言？请在 @DoNotRepeat 帮助我们将Bot翻译为您的语言。"
 
 #: DoNotRepeatBot/constants/message.py:131
-#, python-brace-format
 msgid "• <a href='{LINK}?start={ID}{LOAD}'>{TITLE}</a>"
 msgstr "• <a href='{LINK}?start={ID}{LOAD}'>{TITLE}</a>"
 
@@ -296,17 +289,14 @@ msgid "Send me the snippet to add."
 msgstr "请发送需要添加的便签内容。"
 
 #: DoNotRepeatBot/constants/message.py:144
-#, python-brace-format
 msgid "Language has been set to <code>{LANG}</code>."
 msgstr "语言已设为<code>{LANG}</code>。"
 
 #: DoNotRepeatBot/constants/message.py:147
-#, python-brace-format
 msgid "<code>{TITLE}</code> not found. Use /list to view all your snippets."
 msgstr "未找到 <code>{TITLE}</code>。使用 /list 查看所有便签。"
 
 #: DoNotRepeatBot/constants/message.py:151
-#, fuzzy
 msgid ""
 "Hey there!\n"
 "I'm @DoNotRepeatBot. Never ever repeat the hassle of sending same message "
@@ -316,7 +306,6 @@ msgstr ""
 "我是 @DoNotRepeatBot。再也不用麻烦地重复输入相同的消息了！使用 /help 查看更多信息。"
 
 #: DoNotRepeatBot/constants/message.py:158
-#, python-brace-format
 msgid ""
 "• Chat ID : <code>{CHAT_ID}</code>\n"
 "• Snippets : <code>{COUNT}</code>\n"

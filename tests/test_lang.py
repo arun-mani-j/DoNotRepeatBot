@@ -1,4 +1,8 @@
-import DoNotRepeatBot.utils.gettext as gettext
+from DoNotRepeatBot.constants.message import Message
+from DoNotRepeatBot.utils import gettext
 
 g = gettext.GetText('zh-CN')
-print(g.get("<code>{TITLE}</code> has been added successfully."))
+for k, v in Message.__dict__.items():
+    if not k.startswith('_'):
+        print(g.get(v))
+        print('--------')
