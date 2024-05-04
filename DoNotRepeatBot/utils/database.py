@@ -1,5 +1,7 @@
 """Interface to database."""
 
+from typing import Iterator
+
 import psycopg
 
 from DoNotRepeatBot.constants import Query
@@ -13,27 +15,28 @@ def _next(cur: psycopg.Cursor, default=None):
     return row if row else default
 
 
+def _failsafe(func):
+    """Commit or rollback facility for queries."""
+
+    def wrapped(self, *args, **kwargs):
+        try:
+            ret = func(self, *args, **kwargs)
+        except psycopg.Error as e:
+            self.cnx.rollback()
+            raise e
+        else:
+            self.cnx.commit()
+            return ret
+
+    return wrapped
+
+
 class Database:
     """Interface to database."""
 
     def __init__(self, database_url: str):
         """Interface to database."""
         self.cnx = psycopg.connect(database_url)
-
-    def _failsafe(func):
-        """Commit or rollback facility for queries."""
-
-        def wrapped(self, *args, **kwargs):
-            try:
-                ret = func(self, *args, **kwargs)
-            except psycopg.Error as e:
-                self.cnx.rollback()
-                raise e
-            else:
-                self.cnx.commit()
-                return ret
-
-        return wrapped
 
     @_failsafe
     def add_chat(self, chat_id: int, lang: str):
@@ -74,8 +77,8 @@ class Database:
         cur.close()
         return lang
 
-    def get_snippet_by_id(self, snippet_id: str) -> Snippet:
-        """Get the snippet with the ID."""
+    def get_snippet_by_id(self, snippet_id: str) -> Snippet | None:
+        """Get the snippet by the ID."""
         cur = self.cnx.cursor()
         cur.execute(Query.GET_SNIPPET_BY_ID, {"snippet_id": snippet_id})
         params = _next(cur, ())
@@ -86,8 +89,8 @@ class Database:
         cur.close()
         return snippet
 
-    def get_snippet_by_title(self, chat_id: int, title: str) -> Snippet:
-        """Get the snippet of the chat with the title."""
+    def get_snippet_by_title(self, chat_id: int, title: str) -> Snippet | None:
+        """Get the snippet of the chat by the title."""
         cur = self.cnx.cursor()
         cur.execute(Query.GET_SNIPPET_BY_TITLE, {"chat_id": chat_id, "title": title})
         params = _next(cur, ())
@@ -98,8 +101,8 @@ class Database:
         cur.close()
         return snippet
 
-    def get_snippets_count(self, chat_id: int) -> (int, str):
-        """Get snippets count and language for a chat."""
+    def get_snippets_count(self, chat_id: int) -> int:
+        """Get snippets count for a chat."""
         cur = self.cnx.cursor()
         cur.execute(Query.GET_SNIPPETS_COUNT, {"chat_id": chat_id})
         (count,) = _next(cur, (0,))
@@ -113,7 +116,7 @@ class Database:
         cur.execute(Query.INCREMENT_USAGE, {"chat_id": chat_id, "title": title})
         cur.close()
 
-    def list_snippets(self, chat_id: int) -> list:
+    def list_snippets(self, chat_id: int) -> list[tuple[int, str]]:
         """Yield snippet titles and their ID for a chat."""
         cur = self.cnx.cursor()
         cur.execute(Query.LIST_SNIPPETS, {"chat_id": chat_id})
@@ -121,7 +124,9 @@ class Database:
         cur.close()
         return snips
 
-    def search_snippets(self, chat_id: int, query: str, limit: int):
+    def search_snippets(
+        self, chat_id: int, query: str, limit: int
+    ) -> Iterator[Snippet]:
         """Search snippets matching given query."""
         cur = self.cnx.cursor()
         cur.execute(

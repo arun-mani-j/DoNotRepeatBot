@@ -8,10 +8,10 @@ from DoNotRepeatBot.constants import Literal, Message
 class GetText:
     """GetText interface for translated strings."""
 
-    def __init__(self, lang=Literal.DEFAULT_LANG):
+    def __init__(self, lang: str = Literal.DEFAULT_LANG):
         """GetText interface for translated strings."""
-        self.lang: str = None
-        self.translator: gettext.NullTranslation = None
+        self.lang = ""
+        self.translator = gettext.NullTranslations()
         gettext.find("message", "locales", Literal.TRANSLATIONS, True)
         self.set_language(lang)
 

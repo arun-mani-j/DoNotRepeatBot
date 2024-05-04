@@ -1,5 +1,5 @@
-"""Various utils."""
+"""Various utilities."""
 
-from .database import Database
-from .gettext import GetText
-from .snippet import Snippet
+from DoNotRepeatBot.utils.database import Database
+from DoNotRepeatBot.utils.get_text import GetText
+from DoNotRepeatBot.utils.snippet import Snippet

@@ -1,16 +1,25 @@
 """Snippet and its related functions."""
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
+from typing import Callable
 
-from telegram import (InlineQueryResultArticle, InlineQueryResultCachedAudio,
-                      InlineQueryResultCachedDocument,
-                      InlineQueryResultCachedPhoto,
-                      InlineQueryResultCachedSticker,
-                      InlineQueryResultCachedVideo,
-                      InlineQueryResultCachedVoice, InputTextMessageContent)
-from telegram import Message as TgMessage
+from telegram import (
+    InlineQueryResultArticle,
+    InlineQueryResultCachedAudio,
+    InlineQueryResultCachedDocument,
+    InlineQueryResultCachedPhoto,
+    InlineQueryResultCachedSticker,
+    InlineQueryResultCachedVideo,
+    InlineQueryResultCachedVoice,
+    InputTextMessageContent,
+)
+from telegram import Message as TMessage
 
 from DoNotRepeatBot.constants import FileType, Literal, Message
+
+
+def _simplify(text: str) -> str:
+    return "".join(c for c in text if c.isalnum())
 
 
 @dataclass
@@ -20,10 +29,11 @@ class Snippet:
     chat_id: int
     title: str
     body: str
-    file_id: str
-    file_type: field(default_factory=FileType)
+    file_id: str | None
+    file_type: FileType = FileType.NONE
 
-    def from_message(message: TgMessage, title: str = None):
+    @staticmethod
+    def from_message(message: TMessage, title: str | None = None):
         """Create a snippet from message.
         Title is automatically parsed from message if not provided."""
         if message is None:
@@ -75,57 +85,66 @@ class Snippet:
 
     def to_inline_result(self):
         """Convert self to an inline result."""
-        kwargs = {
-            "id": self.title,
-            "title": self.title,
-            "description": self.body,
-            "caption": self.body,
-        }
-        f_id = self.file_id
+        id_ = _simplify(self.title)
+        file_id = self.file_id
 
         if self.file_type == FileType.AUDIO:
-            res = InlineQueryResultCachedAudio(audio_file_id=f_id, **kwargs)
+            res = InlineQueryResultCachedAudio(
+                id=id_, title=self.title, audio_file_id=file_id, caption=self.body
+            )
         elif self.file_type == FileType.DOCUMENT:
-            res = InlineQueryResultCachedDocument(document_file_id=f_id, **kwargs)
+            res = InlineQueryResultCachedDocument(
+                id=id_, title=self.title, document_file_id=file_id, caption=self.body
+            )
         elif self.file_type == FileType.PHOTO:
-            res = InlineQueryResultCachedPhoto(photo_file_id=f_id, **kwargs)
+            res = InlineQueryResultCachedPhoto(
+                id=id_, title=self.title, photo_file_id=file_id, caption=self.body
+            )
         elif self.file_type == FileType.STICKER:
-            res = InlineQueryResultCachedSticker(sticker_file_id=f_id, **kwargs)
-            del kwargs["caption"]
+            res = InlineQueryResultCachedSticker(id=id_, sticker_file_id=file_id)
         elif self.file_type == FileType.VIDEO:
-            res = InlineQueryResultCachedVideo(video_file_id=f_id, **kwargs)
+            res = InlineQueryResultCachedVideo(
+                id=id_, title=self.title, video_file_id=file_id, caption=self.body
+            )
         elif self.file_type == FileType.VOICE:
-            res = InlineQueryResultCachedVoice(voice_file_id=f_id, **kwargs)
+            res = InlineQueryResultCachedVoice(
+                id=id_,
+                title=self.title,
+                voice_file_id=file_id,
+            )
         else:
-            msg_cnt = InputTextMessageContent(self.body)
-            del kwargs["caption"]
-            res = InlineQueryResultArticle(input_message_content=msg_cnt, **kwargs)
+            content = InputTextMessageContent(self.body)
+            res = InlineQueryResultArticle(
+                id=id_,
+                title=self.title,
+                input_message_content=content,
+            )
 
         return res
 
-    def to_sendable(self, message: Message):
+    def to_sendable(self, message: TMessage) -> tuple[Callable, dict]:
         """Convert self to return a function and kwargs \
         that replies the snippet to given message."""
         kwargs = {"caption": self.body}
-        func = None
+        func: Callable
 
-        if self.file_type == FileType.AUDIO:
+        if self.file_id and self.file_type == FileType.AUDIO:
             kwargs["audio"] = self.file_id
             func = message.reply_audio
-        elif self.file_type == FileType.DOCUMENT:
+        elif self.file_id and self.file_type == FileType.DOCUMENT:
             kwargs["document"] = self.file_id
             func = message.reply_document
-        elif self.file_type == FileType.PHOTO:
+        elif self.file_id and self.file_type == FileType.PHOTO:
             kwargs["photo"] = self.file_id
             func = message.reply_photo
-        elif self.file_type == FileType.STICKER:
+        elif self.file_id and self.file_type == FileType.STICKER:
             kwargs["sticker"] = self.file_id
             func = message.reply_sticker
             del kwargs["caption"]
-        elif self.file_type == FileType.VIDEO:
+        elif self.file_id and self.file_type == FileType.VIDEO:
             kwargs["video"] = self.file_id
             func = message.reply_video
-        elif self.file_type == FileType.VOICE:
+        elif self.file_id and self.file_type == FileType.VOICE:
             kwargs["voice"] = self.file_id
             func = message.reply_voice
         else:

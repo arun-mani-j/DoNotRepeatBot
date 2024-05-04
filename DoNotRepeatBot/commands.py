@@ -1,8 +1,10 @@
 """Commands available to bot."""
 
-from telegram import (BotCommandScopeAllChatAdministrators,
-                      BotCommandScopeAllGroupChats,
-                      BotCommandScopeAllPrivateChats)
+from telegram import (
+    BotCommandScopeAllChatAdministrators,
+    BotCommandScopeAllGroupChats,
+    BotCommandScopeAllPrivateChats,
+)
 
 admin = [
     ("add", "Add a snippet"),

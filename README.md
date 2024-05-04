@@ -93,7 +93,7 @@ You can changed the polling interval using `INTERVAL` (should be an integer) env
 ### Webhooks
 
 Webhooks work on a different method. Here Telegram sends you updates as they are received. Setting up webhooks can be irritating but they worth the pain.
-Beforing diving deep, read the following articles. They can clear most of the doubts and how-tos.
+Before diving deep, read the following articles. They can clear most of the doubts and how-tos.
 
 1. [Where to host Telegram Bots](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Where-to-host-Telegram-Bots)
 2. [How to host your bot](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Hosting-your-bot)
@@ -101,11 +101,12 @@ Beforing diving deep, read the following articles. They can clear most of the do
 
 After reading the above, export the following environment variables.
 
-1. `LISTEN` - the URL on which the bot listens.
-2. `URL` - The URL to which Telegram sends updates.
+1. `LISTEN` - The URL on which the bot listens.
+2. `URL_PATH` - The URL to which Telegram sends updates.
 3. `PORT` - The port on which the bot listens.
+4. `WEBHOOK_URL` - The public URL to your server.
 
-Note that both 1 and 2 are URLs and don't append any extra _slash_ at the end of URL. That is, your link should be `https://www.example.com` and not `https://www.example.com/`.
+Note that 1, 2 and 4 are URLs and don't append any extra _slash_ at the end of URL. That is, your link should be `https://www.example.com` and not `https://www.example.com/`.
 The value of port should be an integer.
 
 Now start your bot with the following command, as did in polling.
